@@ -1,13 +1,11 @@
 # =============================================================================
-# CrashCourse - code-only repository
+# CrashCourse
 #
-# Versioned:   Source/, Config/, *.uproject, .gitattributes, .gitignore, docs
-# NOT versioned: all assets, imported marketplace content, build output,
-#                generated solution/IDE files, caches, local saves.
-#
-# A fresh clone opens with an empty Content/ folder; the editor recreates it.
-# To rebuild the project locally, re-import the marketplace packs listed in
-# the README (ParagonBoris, ParagonMinions, ...).
+# Versioned:     Source/, Config/, Content/ (own maps + blueprints),
+#                *.uproject, .gitattributes, .gitignore
+# NOT versioned: imported marketplace packs (~6 GB of meshes/textures),
+#                raw 3D source files, build output, generated solutions,
+#                IDE state, caches, local saves.
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -42,15 +40,19 @@
 /.vsconfig.user
 
 # -----------------------------------------------------------------------------
-# Assets - everything under Content/ (maps, meshes, textures, blueprints,
-# marketplace packs). Keep only source code in this repo.
+# Content - tracked, EXCEPT imported asset packs
+#
+# Content/_CrashCourse (own maps, blueprints) IS committed.
+# The imported marketplace packs below are not: ParagonBoris ~1.3 GB,
+# ParagonMinions ~4.9 GB. Re-import them locally to run the project.
 # -----------------------------------------------------------------------------
-/Content/
-/Plugins/**/Content/
+/Content/ParagonBoris/
+/Content/ParagonMinions/
 
-# Asset file types, ignored anywhere else they might appear
-*.uasset
-*.umap
+# New imported pack? Add one line per top-level pack folder:
+# /Content/<PackName>/
+
+# Generated / cooked asset sidecars and packaged output
 *.ubulk
 *.uexp
 *.ucas
@@ -60,7 +62,7 @@
 *.pak
 *.sig
 
-# Imported source art that gets cooked into the assets above
+# Raw 3D / DCC source art - the heavy stuff, never in source control
 /SourceArt/
 *.fbx
 *.obj
@@ -83,7 +85,7 @@
 *.dae
 *.3ds
 
-# Textures / audio / video (never needed for a code-only repo)
+# Raw texture / audio / video files (the cooked .uasset versions are what ships)
 *.tga
 *.psd
 *.tif
