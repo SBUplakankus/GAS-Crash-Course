@@ -26,6 +26,7 @@ void ACC_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACC_PlayerController::StopJumping);
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACC_PlayerController::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACC_PlayerController::Look);
+	EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Started, this, &ACC_PlayerController::TriggerPrimary);
 }
 
 void ACC_PlayerController::Jump()
@@ -63,4 +64,14 @@ void ACC_PlayerController::Look(const FInputActionValue& Value)
 	
 	AddYawInput(LookAxisVector.X);
 	AddPitchInput(LookAxisVector.Y);
+}
+
+void ACC_PlayerController::TriggerPrimary()
+{
+	GEngine->AddOnScreenDebugMessage(
+		-1,                         
+		5.0f,                       
+		FColor::MakeRandomColor(),              
+		TEXT("Primary Triggered!")
+	);
 }
