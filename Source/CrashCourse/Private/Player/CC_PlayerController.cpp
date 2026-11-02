@@ -68,10 +68,5 @@ void ACC_PlayerController::Look(const FInputActionValue& Value)
 
 void ACC_PlayerController::TriggerPrimary()
 {
-	GEngine->AddOnScreenDebugMessage(
-		-1,                         
-		5.0f,                       
-		FColor::MakeRandomColor(),              
-		TEXT("Primary Triggered!")
-	);
+	
 }
