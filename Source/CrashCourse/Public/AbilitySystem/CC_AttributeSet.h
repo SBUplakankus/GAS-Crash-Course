@@ -36,8 +36,14 @@ public:
 	
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldValue);
 	
 	ATTRIBUTE_ACCESSORS(ThisClass, Health)

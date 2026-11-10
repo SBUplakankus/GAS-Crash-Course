@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "CC_BaseCharacter.generated.h"
 
+class UGameplayEffect;
 class UGameplayAbility;
 class UAbilitySystemComponent;
 
@@ -21,9 +22,13 @@ public:
 	
 protected:
 	void GiveStartupAbilities();
+	void InitAttributes() const;
 
 private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Crash|Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Crash|Effects")
+	TSubclassOf<UGameplayEffect> InitAttributeEffect;
 };
