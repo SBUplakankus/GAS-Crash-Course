@@ -29,7 +29,11 @@ private:
 	
 	void InitAbilitySystemData();
 	bool IsASCInitialized() const;
+	void InitAttributeDelegate();
 	
 	UFUNCTION()
 	void OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS);
+	
+	UFUNCTION()
+	void BindToAttributeChanges();
 };
