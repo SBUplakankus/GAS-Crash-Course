@@ -19,7 +19,7 @@ void UCC_WidgetComponent::BeginPlay()
 	
 	if (!IsASCInitialized())
 	{
-		CrashCharacter->OnASCInitialized.AddDynamic(this, &ThisClass::OnASCInitialized);#
+		CrashCharacter->OnASCInitialized.AddDynamic(this, &ThisClass::OnASCInitialized);
 		return;
 	}
 	
