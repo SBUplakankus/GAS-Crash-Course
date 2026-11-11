@@ -5,7 +5,11 @@
 
 #include "AbilitySystem/CC_AbilitySystemComponent.h"
 #include "AbilitySystem/CC_AttributeSet.h"
+#include "Blueprint/WidgetTree.h"
 #include "Characters/CC_BaseCharacter.h"
+#include "UI/CC_AttributeWidget.h"
+
+class UCC_AttributeWidget;
 
 void UCC_WidgetComponent::BeginPlay()
 {
@@ -46,6 +50,22 @@ void UCC_WidgetComponent::InitAttributeDelegate()
 	}
 }
 
+void UCC_WidgetComponent::BindWidgetToAttributeChanges(UWidget* WidgetObject,
+	const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const
+{
+	UCC_AttributeWidget* AttributeWidget = Cast<UCC_AttributeWidget>(WidgetObject);
+	if (!IsValid(AttributeWidget)) return;
+	if (!AttributeWidget->MatchesAttributes(Pair)) return;
+		
+	AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get());
+		
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Key).
+	AddLambda([this, AttributeWidget, &Pair](const FOnAttributeChangeData& AttributeChangeData)
+	{
+		AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get());
+	});
+}
+
 void UCC_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent = Cast<UCC_AbilitySystemComponent>(ASC);
@@ -57,6 +77,14 @@ void UCC_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttrib
 
 void UCC_WidgetComponent::BindToAttributeChanges()
 {
-	
+	for (const auto& Pair : AttributeMap)
+	{
+		BindWidgetToAttributeChanges(GetUserWidgetObject(), Pair);
+		
+		GetUserWidgetObject()->WidgetTree->ForEachWidget([this, &Pair](UWidget* ChildWidget)
+		{
+			BindWidgetToAttributeChanges(ChildWidget, Pair);
+		});
+	}
 }
 
